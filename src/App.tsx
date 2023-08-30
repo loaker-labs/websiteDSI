@@ -1,6 +1,8 @@
 import { useEffect } from 'react';
-import TopNav from './components/TopNav';
-import Array from './components/Array';
+import { AppProvider } from './AppContext';
+import { Routes, BrowserRouter, Route } from 'react-router-dom';
+import Dashboard from './components/Dashboard';
+import ConnexionPage from './components/ConnexionPage';
 
 //import axios from 'axios';
 
@@ -11,12 +13,16 @@ const App = () => {
     console.log('useEffect')
   }, [])
 
-
   return (
-    <div className="flex flex-col h-screen">
-      <TopNav />
-      <Array />
-    </div>
+    <BrowserRouter>
+      <AppProvider>
+        <Routes>
+          <Route path="/" element={<ConnexionPage />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+        </Routes>
+      </AppProvider>
+    </BrowserRouter>
+
   )
 }
 

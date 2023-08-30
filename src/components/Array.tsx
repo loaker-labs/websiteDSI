@@ -1,21 +1,30 @@
 import ArrayItem from "./ArrayItem"
+import { useAppContext } from "../AppContext"
 
 const Array = () => {
 
-    const array: {email:string, UAC:string, hasActivated:boolean}[] = [{email:"louis@gmail.com", UAC:"njklbjklvfdjomxejze", hasActivated:true}]
+    const { isConnected, employees } = useAppContext();
+
+    if(!isConnected){
+        window.location.href = "/"
+        return null
+    }
 
     return (
-        <div className="flex flex-col">
-            <div className="flex flex-row">
-                <div className="flex-1">Email</div>
-                <div className="flex-1">UAC</div>
-                <div className="flex-1">Has Activated</div>
+        <table className="flex flex-col w-[80vw] self-center border rounded-md mt-56 overflow-hidden">
+            <div className="flex flex-row font-bold text-lg bg-teal-400">
+                <div className="flex-1 border-x text-center rounded-tl-md">Email</div>
+                <div className="flex-1 border-x text-center">Code d'activation</div>
+                <div className="flex-1 border-x text-center w-[10vw]">État</div>
+                <div className="flex border-x text-center w-[10vw] place-content-center rounded-tr-md">Send mail</div>
             </div>
-            {array.map((item, index) => {
-                return <ArrayItem key={index} email={item.email} UAC={item.UAC} hasActivated={item.hasActivated}/>
-            }
-            )}
-        </div>
+            <tbody>
+                {employees.map((item, index) => {
+                    return <ArrayItem key={index} email={item.email} UAC={item.UAC} hasActivated={item.hasActivated}/>
+                }
+                )}
+            </tbody>
+        </table>
     )
 }
 
